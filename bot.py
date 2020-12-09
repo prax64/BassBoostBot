@@ -84,10 +84,14 @@ def get_text_messages(message):
         with open(name_track, 'wb') as f:
             f.write(file.content)
         if message.audio.file_size // 1024 // 1024 < 10:
-            bot.send_message(message.from_user.id, "Жди, происходит обработка")
-            bot.send_audio(message.from_user.id, boost(name_track, config.__BOOST_MODE, config.__SPEED_MODE))
+            bot.send_message(message.from_user.id, "Ждите, происходит обработка")
+            final = boost(name_track, config.__BOOST_MODE, config.__SPEED_MODE)
+            if(type(final) != 0):
+                bot.send_audio(message.from_user.id, final)
+            else:
+                bot.send_message(message.from_user.id, "Бас должен быть больше 0")
 
-            bot.send_message(message.from_user.id, "Кайфуй солнишка <3")
+            bot.send_message(message.from_user.id, "Готово!")
             clean()
         else:
             bot.send_message(message.from_user.id,
@@ -100,7 +104,7 @@ def get_text_messages(message):
                                                "\n10 - количество децибел, на которое будет увеличен бас (не рекомендую ставить выше 40, но дело твоё, если твой гнилой таз треснет по швам или выпадет динамик, то я тебя предупреждал)"
                                                "\n1.5 - скорость, можно не писать, если не хочешь менять скорость своего пердежа, работает от 0.5 до 2")
     else:
-        phrases = ["Я пукнул", "Hey, nice cock", "Я хачю питси", "Эщкере", "Я какаю кусочьками"]
+        phrases = ["Здрасте", "Добрый вечер", "Я хачю питси", "Эщкере"]
         mes = random.choice(phrases) + ". Если нужна помощь - пиши /help"
         bot.send_message(message.from_user.id, mes)
         mes = ""

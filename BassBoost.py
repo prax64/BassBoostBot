@@ -15,25 +15,29 @@ def boost(name, bass, speedup):
 
     freq = bass_line_freq(track.get_array_of_samples())
 
-    if (freq < 50):
-        filtered_low = track.low_pass_filter(freq)
-        filtered_high = track.high_pass_filter(freq)
-        boosted = filtered_high.overlay(filtered_low + bass)
-        if (0.5 <= speedup <= 2):
-            boosted = speed(boosted, speedup)
-    else:
-        filtered_low = track.low_pass_filter(freq)
-        filtered_low = filtered_low + bass
-        filtered_high = track.high_pass_filter(freq)
-        for i in range(0, 2):
-            filtered_low = filtered_low.low_pass_filter(freq)
-            if not (i > 1):
-                filtered_high = filtered_high.high_pass_filter(freq)
+    if (freq > 0):
+        if (freq < 50):
+            filtered_low = track.low_pass_filter(freq)
+            filtered_high = track.high_pass_filter(freq)
+            boosted = filtered_high.overlay(filtered_low + bass)
+            if (0.5 <= speedup <= 2):
+                boosted = speed(boosted, speedup)
+        else:
+            filtered_low = track.low_pass_filter(freq)
+            filtered_low = filtered_low + bass
+            filtered_high = track.high_pass_filter(freq)
+            for i in range(0, 2):
+                filtered_low = filtered_low.low_pass_filter(freq)
+                if not (i > 1):
+                    filtered_high = filtered_high.high_pass_filter(freq)
 
-        boosted = filtered_high.overlay(filtered_low)
-        if (0.5 <= speedup <= 2):
-            boosted = speed(boosted, speedup)
-    return boosted.export(name.replace('.mp3', '') + ' [dolBitNormalno_bot].mp3', format="mp3", bitrate=original_bitrate)
+            boosted = filtered_high.overlay(filtered_low)
+            if (0.5 <= speedup <= 2):
+                boosted = speed(boosted, speedup)
+        return boosted.export(name.replace('.mp3', '') + ' [dolBitNormalno_bot].mp3', format="mp3",
+                              bitrate=original_bitrate)
+    else:
+        return 0
 
 
 def bass_line_freq(track):
