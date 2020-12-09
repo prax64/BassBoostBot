@@ -45,12 +45,12 @@ def entering_boost_mode(message):
         bot.send_message(message.chat.id, "Что-то не так, попробуй ещё раз!")
         return
     if int(message.text) < 5 or int(message.text) > 41:
-        bot.send_message(message.chat.id, "Не корректрые данные для буста")
+        bot.send_message(message.chat.id, "Не корректные данные для буста")
         return
     else:
         bot.send_message(message.chat.id, "Уровень буста = {0}".format(message.text))
         config.__BOOST_MODE = int(message.text)
-        bot.send_message(message.chat.id, 'Выбери спид мода', reply_markup=keyboard2)
+        bot.send_message(message.chat.id, 'Выбери спид мод', reply_markup=keyboard2)
         dbworker.set_state(message.chat.id, config.States.S_SEND_SPEED_MODE.value)
 
 
@@ -95,16 +95,16 @@ def get_text_messages(message):
             clean()
         else:
             bot.send_message(message.from_user.id,
-                             "Многа, давай что бы было меньше 10 Мб, не охота полдня твоё говно бустить")
+                             "Много, давай что бы было меньше 10 Мб, не охота полдня бустить")
     elif message.text.lower() == "Привет":
         bot.send_message(message.from_user.id, "Привет-привет-привет")
     elif message.text == "/help":
         bot.send_message(message.from_user.id, "Синтаксис работы: bst 10 1.5, "
                                                "\nгде bst - ключевое слово для работы "
-                                               "\n10 - количество децибел, на которое будет увеличен бас (не рекомендую ставить выше 40, но дело твоё, если твой гнилой таз треснет по швам или выпадет динамик, то я тебя предупреждал)"
-                                               "\n1.5 - скорость, можно не писать, если не хочешь менять скорость своего пердежа, работает от 0.5 до 2")
+                                               "\n10 - количество децибел, на которое будет увеличен бас"
+                                               "\n1.5 - скорость, можно не писать, если не хочешь менять скорость трека, работает от 0.5 до 2")
     else:
-        phrases = ["Здрасте", "Добрый вечер", "Я хачю питси", "Эщкере"]
+        phrases = ["Здрасте", "Добрый вечер", "Здарова", "Привет"]
         mes = random.choice(phrases) + ". Если нужна помощь - пиши /help"
         bot.send_message(message.from_user.id, mes)
         mes = ""
