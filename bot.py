@@ -11,10 +11,10 @@ keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
 keyboard1.row('5', '10', '15', '20', '25', '30')
 
 keyboard2 = telebot.types.ReplyKeyboardMarkup(True, True)
-keyboard2.row('0.5', '0.6', '0.7', '0.8', '1', '1.1')
+keyboard2.row('0.5', '0.6', '0.7', '0.8', '0.9', '1', '1.1')
+
 
 def is_float(s):
-    """ Returns True is string is a number. """
     try:
         float(s)
         return True
@@ -61,9 +61,10 @@ def entering_speed_mode(message):
         bot.send_message(message.chat.id, "Что-то не так, попробуй ещё раз!")
         return
     if float(message.text) <= 0.5 or float(message.text) > 1.5:
-        bot.send_message(message.chat.id, "Не корректрые данные для спид мода")
+        bot.send_message(message.chat.id, "Некорректрые данные для спид мода")
         return
     else:
+        bot.send_message(message.chat.id, "Уровень спид мода = {0}".format(message.text))
         bot.send_message(message.chat.id, "Добавьте трек для буста")
         config.__SPEED_MODE = float(message.text)
         dbworker.set_state(message.chat.id, config.States.S_TRACK_PROCESSING_MODE.value)
@@ -92,6 +93,7 @@ def get_text_messages(message):
                 bot.send_message(message.from_user.id, "Бас должен быть больше 0")
 
             bot.send_message(message.from_user.id, "Готово!")
+            bot.send_message(message.from_user.id, "Если вы хотете сбросить настройки буста, введите команду /reset")
             clean()
         else:
             bot.send_message(message.from_user.id,
