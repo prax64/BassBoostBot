@@ -9,7 +9,7 @@ from pydub.utils import mediainfo
 
 
 
-def boost(name, bass, speedup):
+def get_boost_audio(name, bass, speedup):
     track = AudioSegment.from_file(name)
     original_bitrate = mediainfo(name)['bit_rate']
 

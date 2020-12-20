@@ -4,7 +4,7 @@ import telebot
 import config
 import dbworker
 
-from BassBoost import boost, clean
+from BassBoost import get_boost_audio, clean
 
 bot = telebot.TeleBot(config.__token)
 keyboard1 = telebot.types.ReplyKeyboardMarkup(True, True)
@@ -86,7 +86,7 @@ def get_boost_audio(message):
             f.write(file.content)
         if message.audio.file_size // 1024 // 1024 < 10:
             bot.send_message(message.from_user.id, "Ждите, происходит обработка")
-            final = boost(name_track, config.__BOOST_MODE, config.__SPEED_MODE)
+            final = get_boost_audio(name_track, config.__BOOST_MODE, config.__SPEED_MODE)
             if(type(final) != 0):
                 bot.send_audio(message.from_user.id, final)
             else:
