@@ -73,7 +73,7 @@ def entering_speed_mode(message):
 
 @bot.message_handler(content_types=['audio'], func=lambda message: dbworker.get_current_state(message.chat.id)
                                                                    == config.States.S_TRACK_PROCESSING_MODE.value )
-def get_boost_audio(message):
+def get_bb_audio(message):
     if message.audio:
         file_id_info = bot.get_file(message.audio.file_id)
         file = requests.get('https://api.telegram.org/file/bot{0}/{1}'.format(config.__token, file_id_info.file_path))
